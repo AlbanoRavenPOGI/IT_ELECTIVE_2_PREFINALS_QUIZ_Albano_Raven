@@ -1,0 +1,171 @@
+﻿@model PREFINALS_QUIZ_PORTFOLIO.Models.Project
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "_Layout";
+}
+
+<style>
+    .top-navbar {
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--glass-border);
+        padding: 16px 0;
+        margin-bottom: 30px;
+    }
+
+    .detail-hero-img {
+        width: 100%;
+        max-height: 380px;
+        object-fit: cover;
+        border-radius: 16px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    }
+
+    .project-title {
+        word-break: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+
+    .comment-input {
+        background: rgba(15, 23, 42, 0.6) !important;
+        border: 1px solid var(--glass-border) !important;
+        color: #ffffff !important;
+        border-radius: 12px;
+        padding: 12px 16px;
+    }
+
+        .comment-input:focus {
+            border-color: #8b5cf6 !important;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3) !important;
+            color: #ffffff !important;
+        }
+
+        .comment-input::placeholder {
+            color: #94a3b8 !important;
+        }
+
+    .comment-avatar {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #06b6d4, #3b82f6);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: #ffffff;
+        flex-shrink: 0;
+    }
+
+    .comment-author {
+        color: #ffffff !important;
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    .comment-time {
+        color: #94a3b8 !important;
+        font-size: 0.8rem;
+    }
+
+    .comment-body {
+        color: #f1f5f9 !important;
+        font-size: 0.95rem;
+    }
+</style>
+
+<header class="top-navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a asp-action="Index" class="btn btn-outline-light btn-sm rounded-pill px-3">
+            <i class="bi bi-arrow-left me-1"></i> Back to Index
+        </a>
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+            Logout
+        </a>
+    </div>
+</header>
+
+<div class="container pb-5">
+    <div class="glass-card p-4 p-md-5 mb-5">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-5">
+                <img src="@Model.ThumbnailUrl" alt="@Model.Title" class="detail-hero-img" onerror="this.src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop'" />
+            </div>
+            <div class="col-lg-7">
+                <span class="badge px-3 py-2 rounded-pill fw-bold mb-3" style="background: linear-gradient(135deg, #8b5cf6, #ec4899); color: white;">
+                    @Model.Category
+                </span>
+
+                <h2 class="fw-bold text-white display-6 mb-3 project-title">@Model.Title</h2>
+                <p class="text-light fs-6 mb-4" style="line-height: 1.7; color: #e2e8f0 !important;">
+                    @Model.Description
+                </p>
+
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="@Model.GithubUrl" target="_blank" class="btn btn-lg px-4 rounded-3 text-white fw-bold" style="background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);">
+                        <i class="bi bi-github me-2"></i> Open Repository ↗
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card p-4 p-md-5">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h4 class="fw-bold text-white mb-0">
+                <i class="bi bi-chat-left-text-fill me-2" style="color: #a78bfa;"></i> Project Feedback & Comments
+            </h4>
+            <span class="badge bg-dark bg-opacity-75 text-light px-3 py-2 rounded-pill border border-secondary">
+                @Model.Comments.Count Comments
+            </span>
+        </div>
+
+        <form asp-action="AddComment" method="post" class="mb-5">
+            <input type="hidden" name="projectId" value="@Model.Id" />
+            <div class="row g-3">
+                <div class="col-md-5">
+                    <input type="text" name="author" class="form-control comment-input" placeholder="Your Name (e.g. Professor / Reviewer)" />
+                </div>
+                <div class="col-12">
+                    <textarea name="content" class="form-control comment-input" rows="3" placeholder="Write a comment or feedback about this repository..." required></textarea>
+                </div>
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary px-4 rounded-3 fw-bold" style="background: #8b5cf6; border: none;">
+                        <i class="bi bi-send-fill me-1"></i> Submit Comment
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <hr class="border-secondary border-opacity-25 my-4" />
+
+        <div class="d-flex flex-column gap-3">
+            @if (!Model.Comments.Any())
+            {
+                <div class="text-center py-4 text-secondary">
+                    <i class="bi bi-chat-square-dots fs-1 d-block mb-2 text-muted"></i>
+                    No comments posted yet. Be the first to leave feedback!
+                </div>
+            }
+            else
+            {
+                @foreach (var c in Model.Comments.OrderByDescending(x => x.PostedAt))
+                {
+                    <div class="p-3 rounded-3" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.12);">
+                        <div class="d-flex align-items-center gap-3 mb-2">
+                            <div class="comment-avatar">
+                                @(string.IsNullOrEmpty(c.Author) ? "A" : c.Author.Substring(0, 1).ToUpper())
+                            </div>
+                            <div>
+                                <div class="comment-author">@c.Author</div>
+                                <div class="comment-time"><i class="bi bi-clock me-1"></i>@c.PostedAt.ToString("MMM dd, yyyy • hh:mm tt")</div>
+                            </div>
+                        </div>
+                        <p class="mb-0 comment-body mt-2 ms-5">@c.Content</p>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

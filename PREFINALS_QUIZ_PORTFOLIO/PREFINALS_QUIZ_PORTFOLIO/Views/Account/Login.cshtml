@@ -1,0 +1,111 @@
+﻿@model PREFINALS_QUIZ_PORTFOLIO.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_Layout";
+}
+
+<style>
+    .login-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 440px;
+        padding: 40px 32px;
+        transition: transform 0.3s ease;
+    }
+
+    .form-control-modern {
+        background: rgba(15, 23, 42, 0.6) !important;
+        border: 1px solid var(--glass-border) !important;
+        color: #ffffff !important;
+        border-radius: 12px;
+        padding: 14px 16px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+        .form-control-modern:focus {
+            border-color: #a78bfa !important;
+            box-shadow: 0 0 15px rgba(167, 139, 250, 0.3) !important;
+            background: rgba(15, 23, 42, 0.8) !important;
+            color: #ffffff !important;
+        }
+
+        .form-control-modern::placeholder {
+            color: #94a3b8 !important;
+        }
+
+    .btn-gradient {
+        background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        border: none;
+        color: #ffffff;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        padding: 14px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+        transition: all 0.3s ease;
+    }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(236, 72, 153, 0.5);
+            color: #ffffff;
+        }
+
+    .brand-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin: 0 auto 20px auto;
+        box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+    }
+</style>
+
+<div class="login-wrapper">
+    <div class="glass-card login-card text-center">
+        <div class="brand-icon text-white">
+            <i class="bi bi-briefcase-fill"></i>
+        </div>
+
+        <h2 class="fw-bold mb-1 gradient-text">Portfolio Portal</h2>
+        <p class="text-secondary small mb-4">Raven Albaño — Prefinals Quiz Application</p>
+
+        @if (!string.IsNullOrEmpty(Model?.ErrorMessage))
+        {
+            <div class="alert alert-danger border-0 text-white bg-danger bg-opacity-25 rounded-3 mb-4 text-start small d-flex align-items-center gap-2">
+                <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                <div>@Model.ErrorMessage</div>
+            </div>
+        }
+
+        <form asp-action="Login" method="post" class="text-start">
+            <div class="mb-3">
+                <label class="form-label small fw-semibold text-secondary">Username</label>
+                <div class="input-group">
+                    <input type="text" name="Username" class="form-control form-control-modern" placeholder="Enter username" required autocomplete="off" />
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label small fw-semibold text-secondary">Password</label>
+                <input type="password" name="Password" class="form-control form-control-modern" placeholder="Enter password" required />
+            </div>
+
+            <button type="submit" class="btn btn-gradient w-100">
+                Sign In to Portfolio <i class="bi bi-arrow-right-short ms-1 fs-5 align-middle"></i>
+            </button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Raven's Portfolio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+            :root {
+                --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+                --glass-bg: rgba(255, 255, 255, 0.06);
+                --glass-border: rgba(255, 255, 255, 0.12);
+                --glass-hover: rgba(255, 255, 255, 0.12);
+                --accent-purple: #8b5cf6;
+                --accent-pink: #ec4899;
+                --accent-cyan: #06b6d4;
+                --text-primary: #f8fafc;
+                --text-secondary: #cbd5e1;
+                --text-muted: #94a3b8;
+            }
+
+            body {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                background: var(--bg-gradient);
+                background-attachment: fixed;
+                color: var(--text-primary);
+                min-height: 100vh;
+                margin: 0;
+                padding: 0;
+                overflow-x: hidden;
+            }
+
+            .glass-card {
+                background: var(--glass-bg);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid var(--glass-border);
+                border-radius: 20px;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            }
+
+            .gradient-text {
+                background: linear-gradient(135deg, #a78bfa 0%, #f472b6 50%, #38bdf8 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .ambient-orb {
+                position: fixed;
+                border-radius: 50%;
+                filter: blur(90px);
+                z-index: 0;
+                pointer-events: none;
+                opacity: 0.4;
+            }
+
+            .orb-1 {
+                top: -10%;
+                left: -10%;
+                width: 450px;
+                height: 450px;
+                background: #7c3aed;
+            }
+
+            .orb-2 {
+                bottom: -10%;
+                right: -5%;
+                width: 500px;
+                height: 500px;
+                background: #db2777;
+            }
+
+            .orb-3 {
+                top: 40%;
+                left: 35%;
+                width: 350px;
+                height: 350px;
+                background: #0284c7;
+            }
+
+            .app-container {
+                position: relative;
+                z-index: 1;
+            }
+    </style>
+</head>
+<body>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <div class="app-container">
+        @RenderBody()
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
